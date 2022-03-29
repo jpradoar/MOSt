@@ -71,41 +71,28 @@ And finally use chaos-mesh to do some chaos experiments (crashes controlled by m
 |grafana-dashboard-(sub-name).yaml  |Dashboards that I have been creating and getting from our lovely community | - | 
 |06-Loki_log_monitoring             |Configure your own deploy and modify storage size (EBS) | - |
 
-
-
 <br><br>
 
-<div align="center"><h1><b> Architecture </b></h1></div>
+<div align="center">
+ 
+  <h1><b> Architecture </b></h1>
+  <br>
+  <img src="img/stack-prom-loki-graf.png" />
+  <br><br><br>
+  <h1><b> Important Dashboards </b></h1>
+  <br><br><hr><br>
+  <img src="img/full-pods.png" />     <br>  Detailed information about Pod status, volume status, volume attached, last logs and more
+  <br><hr><br>
+  <br><br><img src="img/05.png" />        <br>  Detailed information on resources used by each pod (similar to kubectl top pod) 
+  <br><br><hr><br>
+  <br><br><br><img src="img/13.png" />        <br>  Logs for each pod (similar to:  kubectl -n NAMESPACE logs POD ) 
+  <br><br><hr><br>
+  <br><br><br><img src="img/aws-vpn.png" />   <br>  VPN and tunnel status information 
+  <br><br><hr><br>
+  <br><br><br><img src="img/iam-users.png" /> <br>  Remember, to manage cloudwatch you need a user with ReadOnly permissions
+  <br><br><br><br>
 
-<br><img src="img/stack-prom-loki-graf.png" />
-
-
-<br><br>
-
-<div align="center"><h1><b> Important Dashboards </b></h1></div>
-
-
-<br><img src="img/full-pods.png" />
-Detailed information about Pod status, volume status, volume attached, last logs and more
-<br><br><br>
-
-<br><img src="img/05.png" />
-Detailed information on resources used by each pod (similar to kubectl top pod) 
-<br><br><br>
-
-<br><img src="img/13.png" />
-Logs for each pod (similar to:  kubectl -n NAMESPACE logs POD ) 
-<br><br><br>
-
-<br><img src="img/aws-vpn.png" />
-VPN and tunnel status information 
-<br><br><br>
-
-<br><img src="img/iam-users.png" />
-<br>
-Remember, to manage cloudwatch you need a user with ReadOnly permissions
-<br><br><br>
-
+</div>
 
 <br><br><br>
 
@@ -113,22 +100,25 @@ Remember, to manage cloudwatch you need a user with ReadOnly permissions
 <br>
 
 ### Default / Logs by App  (one of my favourites)
+<pre>
  - Application logs (similar to kubectl logs pod )
  - Possibility to filter up to 3 levels in real time
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / Nodes
+<pre>
 - Real-time information on CPU usage of the node
 - Node load average information
 - Node memory information
 - Disk information (I/O) of the node
 - Node disk space information
 - Network Information (In/Out)
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / Kubernetes simple and fast Troubleshooting (I spent a lot of time on this, super useful)
+<pre>
 - Total nodes    
 - Total Pods     
 - Pods in a state other than running
@@ -142,25 +132,28 @@ Remember, to manage cloudwatch you need a user with ReadOnly permissions
 - Detailed status of the volumes (name, type, and capacity of the same)
 - Repository and Container Image used in the pod.
 - Reasons of last fail pod/container
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / AWS VPN
+<pre>
 - IN/OUT traffic of each tunnel
 - State of the VPN tunnels discriminated by account
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / AWS RDS
+<pre>
 - CPU information from the database
 - Disk Queue Deph Information
 - ReadLatency
 - Read Thought
 - Network IN/OUT
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / kubernetes-pvc-fast-view
+<pre>
 - Detailed status of the volumes (name, type, and capacity of the same)
 - PVCs size status
 - PVCs Above Warning Threshold
@@ -168,40 +161,46 @@ Remember, to manage cloudwatch you need a user with ReadOnly permissions
 - PVCs in Lost State
 - Disk usage trend
 - Disk usage rate
+</pre>
 
-<hr><br>
+<br>
 
 ### Default / AWS Certificate Manage
+<pre>
 - Information on when the certificates expire
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / AWS Auto Scaling
+<pre>
 - Cluster autoscaling information
-
-<hr><br>
+</pre>
+<br>
 
 ### Autoscaler kubernetes
+<pre>
 - Detailed information on what happens to the cluster when it scales up or down
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / Kubernetes / Compute Resources / Pod
+<pre>
 - Information on cpu usage of each pod
 - Information on throttling (https://www.geeknetic.es/Throttling/que-es-y-para-que-sirve)
 - Information on assigned resources (request/Limits) of each pod
 - Memory usage information for each pod
 - Network information (In/Out) of each pod
 - Storage IO information of each pod
-
-<hr><br>
+</pre>
+<br>
 
 ### Default / AWS ELB Application Load Balancer (ALB) & AWS Network Load Balancer (NLB)
+<pre>
 - Information of AWS load balancers discriminated by account
 - HTTPCode_Target information (2xx, 3xx, 4xx, 5xx)
 - HTTPCode information (2xx, 3xx, 4xx, 5xx) 
-
-<br><hr><br>
+</pre>
+<br><br>
 
 
 
