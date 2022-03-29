@@ -1,0 +1,504 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-logs-by-app
+  namespace: monitoring
+data:
+  only-logs.json: |
+      {
+        "annotations": {
+          "list": [
+            {
+              "$$hashKey": "object:75",
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+              },
+              "type": "dashboard"
+            }
+          ]
+        },
+        "description": "Log Viewer Dashboard for Loki",
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "gnetId": 13639,
+        "graphTooltip": 0,
+        "iteration": 1646481452528,
+        "links": [
+          {
+            "$$hashKey": "object:59",
+            "icon": "bolt",
+            "includeVars": true,
+            "keepTime": true,
+            "tags": [],
+            "targetBlank": true,
+            "title": "View In Explore",
+            "type": "link",
+            "url": "/explore?orgId=1&left=[\"now-1h\",\"now\",\"Loki\",{\"expr\":\"{job=\\\"$app\\\"}\"},{\"ui\":[true,true,true,\"none\"]}]"
+          },
+          {
+            "$$hashKey": "object:61",
+            "icon": "external link",
+            "tags": [],
+            "targetBlank": true,
+            "title": "Learn LogQL",
+            "type": "link",
+            "url": "https://grafana.com/docs/loki/latest/logql/"
+          }
+        ],
+        "liveNow": false,
+        "panels": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "fixed"
+                },
+                "links": [],
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 5,
+              "x": 0,
+              "y": 0
+            },
+            "id": 10,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "value"
+            },
+            "pluginVersion": "8.4.3",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "P982945308D3682D1"
+                },
+                "expr": "sum(count_over_time({job=\"$app\"} |= \"$search\" |= \"$second_search\" |= \"$third_search\" [$__range]) )",
+                "legendFormat": "",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "title": "ALL  Match filters",
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "fixed"
+                },
+                "links": [],
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 5,
+              "y": 0
+            },
+            "id": 7,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "value"
+            },
+            "pluginVersion": "8.4.3",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "P982945308D3682D1"
+                },
+                "expr": "sum(count_over_time({job=\"$app\"} |= \"$search\" [$__range]) )",
+                "legendFormat": "",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "title": "1sr String Match",
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "fixed"
+                },
+                "links": [],
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 7,
+              "y": 0
+            },
+            "id": 8,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "value"
+            },
+            "pluginVersion": "8.4.3",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "P982945308D3682D1"
+                },
+                "expr": "sum(count_over_time({job=\"$app\"} |= \"$second_search\"  [$__range]) )",
+                "legendFormat": "",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "title": "2nd String Match",
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "fixed"
+                },
+                "links": [],
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 9,
+              "y": 0
+            },
+            "id": 9,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "value"
+            },
+            "pluginVersion": "8.4.3",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "P982945308D3682D1"
+                },
+                "expr": "sum(count_over_time({job=\"$app\"} |= \"$third_search\" [$__range]) )",
+                "legendFormat": "",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "title": "3rd String Match",
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 11,
+              "x": 11,
+              "y": 0
+            },
+            "id": 11,
+            "options": {
+              "content": "# Is similar to run:\n## kubectl logs pod |grep ${search}",
+              "mode": "markdown"
+            },
+            "pluginVersion": "8.4.3",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "loki",
+                  "uid": "P982945308D3682D1"
+                },
+                "expr": "sum(count_over_time({job=\"$app\"} |= \"$third_search\" [$__range]) )",
+                "legendFormat": "",
+                "queryType": "range",
+                "refId": "A"
+              }
+            ],
+            "type": "text"
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "gridPos": {
+              "h": 25,
+              "w": 24,
+              "x": 0,
+              "y": 3
+            },
+            "id": 2,
+            "maxDataPoints": "",
+            "options": {
+              "dedupStrategy": "none",
+              "enableLogDetails": false,
+              "prettifyLogMessage": true,
+              "showCommonLabels": false,
+              "showLabels": false,
+              "showTime": false,
+              "sortOrder": "Descending",
+              "wrapLogMessage": true
+            },
+            "targets": [
+              {
+                "expr": "{job=\"$app\"} |= \"$search\" |= \"$second_search\" |= \"$third_search\" | logfmt ",
+                "hide": false,
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "transparent": true,
+            "type": "logs"
+          }
+        ],
+        "refresh": false,
+        "schemaVersion": 35,
+        "style": "dark",
+        "tags": [
+          "logs",
+          "app",
+          "troubleshooting",
+          "trouble",
+          "fast view",
+          "simple",
+          "sre"
+        ],
+        "templating": {
+          "list": [
+            {
+              "current": {
+                "selected": false,
+                "text": "default/pod-name",
+                "value": "default-pod-name"
+              },
+              "datasource": {
+                "type": "loki",
+                "uid": "P982945308D3682D1"
+              },
+              "definition": "label_values(job)",
+              "hide": 0,
+              "includeAll": false,
+              "label": "App",
+              "multi": false,
+              "name": "app",
+              "options": [],
+              "query": "label_values(job)",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "sort": 0,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            },
+            {
+              "current": {
+                "selected": false,
+                "text": "SERVICE_ORDER_EXECUTION",
+                "value": "SERVICE_ORDER_EXECUTION"
+              },
+              "hide": 0,
+              "label": "1sr String Match",
+              "name": "search",
+              "options": [
+                {
+                  "selected": true,
+                  "text": "SERVICE_ORDER_EXECUTION",
+                  "value": "SERVICE_ORDER_EXECUTION"
+                }
+              ],
+              "query": "SERVICE_ORDER_EXECUTION",
+              "skipUrlSync": false,
+              "type": "textbox"
+            },
+            {
+              "current": {
+                "selected": false,
+                "text": "activitiName",
+                "value": "activitiName"
+              },
+              "hide": 0,
+              "label": "2nd String Match",
+              "name": "second_search",
+              "options": [
+                {
+                  "selected": true,
+                  "text": "activitiName",
+                  "value": "activitiName"
+                }
+              ],
+              "query": "activitiName",
+              "skipUrlSync": false,
+              "type": "textbox"
+            },
+            {
+              "current": {
+                "selected": false,
+                "text": "Delete",
+                "value": "Delete"
+              },
+              "hide": 0,
+              "label": "3rd String Match",
+              "name": "third_search",
+              "options": [
+                {
+                  "selected": true,
+                  "text": "Delete",
+                  "value": "Delete"
+                }
+              ],
+              "query": "Delete",
+              "skipUrlSync": false,
+              "type": "textbox"
+            }
+          ]
+        },
+        "time": {
+          "from": "now-5m",
+          "to": "now"
+        },
+        "timepicker": {
+          "hidden": false,
+          "refresh_intervals": [
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+          ]
+        },
+        "timezone": "",
+        "title": "Logs by App",
+        "uid": "liz0yRCZz",
+        "version": 1,
+        "weekStart": ""
+      }  

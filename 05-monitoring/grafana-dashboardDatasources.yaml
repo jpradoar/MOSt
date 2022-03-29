@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  namespace: monitoring
+  name: grafana-all-datasources
+data:
+  datasources.yaml: |-
+      {
+          "apiVersion": 1,
+          "datasources": [    
+              {
+                  "access": "proxy",
+                  "editable": true,
+                  "isDefault": true,
+                  "name": "prometheus",
+                  "orgId": 1,
+                  "type": "prometheus",
+                  "url": "http://prometheus-k8s.monitoring.svc:9090",
+                  "version": 1
+              },
+              {
+                 "access": "proxy",
+                  "editable": true,
+                  "name": "loki",
+                  "type": "loki",
+                  "url": "http://loki-stack.loki-stack:3100",
+                  "version": 1
+              },                        
+              {
+                "id": 9,
+                "uid": "123456789",
+                "orgId": 1,
+                "name": "AWS-PRODUCTION-ACCOUNT",
+                "type": "cloudwatch",
+                "typeName": "CloudWatch",
+                "typeLogoUrl": "public/app/plugins/datasource/cloudwatch/img/amazon-web-services.png",
+                "access": "proxy",
+                "url": "",
+                "password": "",
+                "user": "",
+                "database": "",
+                "basicAuth": false,
+                "isDefault": false,
+                "jsonData": {
+                  "assumeRoleArn": "arn:aws:iam::123456789:role/ReadOnly",
+                  "authType": "keys",
+                  "defaultRegion": "us-east-1",
+                  "externalId": "123456789"
+                },
+                "secureJsonData": {     
+                          "accessKey": "AAAAAAAAAAAAAAAAAAAA",               
+                          "secretKey": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                          },
+                "readOnly": true
+              },             
+              {
+                "id": 11,
+                "uid": "9876543210",
+                "orgId": 1,
+                "name": "AWS-DEV-ACCOUNT",
+                "type": "cloudwatch",
+                "typeName": "CloudWatch",
+                "typeLogoUrl": "public/app/plugins/datasource/cloudwatch/img/amazon-web-services.png",
+                "access": "proxy",
+                "url": "",
+                "password": "",
+                "user": "",
+                "database": "",
+                "basicAuth": false,
+                "isDefault": false,
+                "jsonData": {
+                  "assumeRoleArn": "arn:aws:iam::9876543210:role/ReadOnly",
+                  "authType": "keys",
+                  "defaultRegion": "us-east-1",
+                  "externalId": "9876543210"
+                },
+                "secureJsonData": {
+                          "accessKey": "AAAAAAAAAAAAAAAAA",
+                          "secretKey": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                          },
+                "readOnly": true
+              },              
+
+          ]
+      }

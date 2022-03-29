@@ -1,0 +1,1621 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-billing-dashboard
+  namespace: monitoring
+data:
+  aws-billing-dashboard.json: |
+      {
+        "annotations": {
+          "list": [
+            {
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+              },
+              "type": "dashboard"
+            }
+          ]
+        },
+        "description": "Visualize estimated AWS charges per AWS resource (EC2, S3, ...)",
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "gnetId": 13514,
+        "graphTooltip": 0,
+        "id": 10,
+        "iteration": 1644840068238,
+        "links": [],
+        "liveNow": false,
+        "panels": [
+          {
+            "gridPos": {
+              "h": 3,
+              "w": 4,
+              "x": 0,
+              "y": 0
+            },
+            "id": 20,
+            "options": {
+              "content": "|Account|\n|---|\n|$datasource|",
+              "mode": "markdown"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "periods": 7,
+                "queryType": "TimeShift",
+                "refId": "A",
+                "timeshiftUnit": "days"
+              }
+            ],
+            "type": "text"
+          },
+          {
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "displayName": "This month spend",
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-orange",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "currencyUSD"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 8,
+              "x": 4,
+              "y": 0
+            },
+            "id": 13,
+            "links": [],
+            "options": {
+              "colorMode": "background",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "sum"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "hide": false,
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1M",
+                "refId": "A",
+                "region": "default",
+                "returnData": false,
+                "statistic": "Maximum"
+              }
+            ],
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "displayName": "Average daily spend",
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-orange",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "currencyUSD"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 7,
+              "x": 12,
+              "y": 0
+            },
+            "id": 14,
+            "links": [],
+            "options": {
+              "colorMode": "background",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "mean"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "hide": false,
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1d",
+                "refId": "A",
+                "region": "default",
+                "returnData": false,
+                "statistic": "Average"
+              }
+            ],
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "displayName": "Today's spend",
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-orange",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "currencyUSD"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 5,
+              "x": 19,
+              "y": 0
+            },
+            "id": 15,
+            "links": [],
+            "options": {
+              "colorMode": "background",
+              "graphMode": "none",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "last"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "hide": false,
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1d",
+                "refId": "A",
+                "region": "default",
+                "returnData": false,
+                "statistic": "Average"
+              }
+            ],
+            "type": "stat"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "decimals": 0,
+            "fieldConfig": {
+              "defaults": {
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 10,
+              "w": 9,
+              "x": 0,
+              "y": 3
+            },
+            "hiddenSeries": false,
+            "id": 1,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": false,
+              "show": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "hide": false,
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1M",
+                "refId": "A",
+                "region": "default",
+                "returnData": false,
+                "statistic": "Maximum"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": "6M",
+            "timeRegions": [],
+            "title": "Montly Estimated charges",
+            "tooltip": {
+              "shared": false,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:3436",
+                "format": "currencyUSD",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:3437",
+                "format": "short",
+                "logBase": 1,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "decimals": 0,
+            "fieldConfig": {
+              "defaults": {
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 10,
+              "w": 5,
+              "x": 9,
+              "y": 3
+            },
+            "hiddenSeries": false,
+            "id": 6,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": false,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "hide": false,
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1d",
+                "refId": "A",
+                "region": "default",
+                "returnData": false,
+                "statistic": "Maximum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "Daily Estimated charges",
+            "tooltip": {
+              "shared": false,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:3436",
+                "format": "currencyUSD",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:3437",
+                "format": "short",
+                "logBase": 1,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "decimals": 0,
+            "editable": true,
+            "error": false,
+            "fieldConfig": {
+              "defaults": {
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "grid": {},
+            "gridPos": {
+              "h": 10,
+              "w": 6,
+              "x": 14,
+              "y": 3
+            },
+            "hiddenSeries": false,
+            "id": 3,
+            "isNew": true,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": false,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "total": false,
+              "values": true
+            },
+            "lines": false,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+              {
+                "$$hashKey": "object:3190"
+              }
+            ],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "{{ServiceName}}",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "*"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1d",
+                "refId": "B",
+                "region": "us-east-1",
+                "returnData": false,
+                "statistic": "Maximum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "Estimated charges by Service",
+            "tooltip": {
+              "msResolution": false,
+              "shared": false,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:54",
+                "format": "currencyUSD",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:55",
+                "format": "short",
+                "logBase": 1,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "breakPoint": "50%",
+            "combine": {
+              "label": "Others",
+              "threshold": "0.03"
+            },
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "fontSize": "80%",
+            "format": "currencyUSD",
+            "gridPos": {
+              "h": 10,
+              "w": 4,
+              "x": 20,
+              "y": 3
+            },
+            "id": 16,
+            "legend": {
+              "percentage": true,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "values": true
+            },
+            "legendType": "Under graph",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "pieType": "pie",
+            "strokeWidth": "1",
+            "targets": [
+              {
+                "alias": "{{ServiceName}}",
+                "application": {
+                  "filter": ""
+                },
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "*"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "highResolution": false,
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/Billing",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "1d",
+                "refId": "B",
+                "region": "us-east-1",
+                "returnData": false,
+                "statistic": "Sum"
+              }
+            ],
+            "title": "Estimated charges by Service",
+            "type": "grafana-piechart-panel",
+            "valueName": "current"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "decimals": 2,
+            "fieldConfig": {
+              "defaults": {
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 10,
+            "gridPos": {
+              "h": 8,
+              "w": 24,
+              "x": 0,
+              "y": 13
+            },
+            "hiddenSeries": false,
+            "id": 5,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD"
+                },
+                "expression": "",
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "1d",
+                "refId": "A",
+                "region": "us-east-1",
+                "statistic": "Maximum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "Daily Spend by Account",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:2913",
+                "format": "currencyUSD",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:2914",
+                "format": "short",
+                "logBase": 1,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 21
+            },
+            "hiddenSeries": false,
+            "id": 24,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonEC2"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "B",
+                "region": "default",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonEC2"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "A",
+                "region": "default",
+                "statistic": "Maximum"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonEC2"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "C",
+                "region": "default",
+                "statistic": "Minimum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "EC2 Estimated U$S cost",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:684",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:685",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 21
+            },
+            "hiddenSeries": false,
+            "id": 23,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonEKS"
+                },
+                "expression": "",
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "A",
+                "region": "default",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonEKS"
+                },
+                "expression": "",
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "B",
+                "region": "default",
+                "statistic": "Maximum"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonEKS"
+                },
+                "expression": "",
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "C",
+                "region": "default",
+                "statistic": "Minimum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "EKS Estimated U$S cost",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:684",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:685",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 8,
+              "x": 0,
+              "y": 29
+            },
+            "hiddenSeries": false,
+            "id": 25,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonRDS"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "B",
+                "region": "default",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonRDS"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "A",
+                "region": "default",
+                "statistic": "Maximum"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonRDS"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "C",
+                "region": "default",
+                "statistic": "Minimum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "RDS Estimated U$S cost",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:684",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:685",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 8,
+              "x": 8,
+              "y": 29
+            },
+            "hiddenSeries": false,
+            "id": 26,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonS3"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "B",
+                "region": "default",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonS3"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "A",
+                "region": "default",
+                "statistic": "Maximum"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonS3"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "C",
+                "region": "default",
+                "statistic": "Minimum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "S3 Estimated U$S cost",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:684",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:685",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 8,
+              "x": 16,
+              "y": 29
+            },
+            "hiddenSeries": false,
+            "id": 27,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "rightSide": false,
+              "show": true,
+              "total": true,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonRoute53"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "B",
+                "region": "default",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonRoute53"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "A",
+                "region": "default",
+                "statistic": "Maximum"
+              },
+              {
+                "alias": "",
+                "dimensions": {
+                  "Currency": "USD",
+                  "ServiceName": "AmazonRoute53"
+                },
+                "expression": "",
+                "hide": false,
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "EstimatedCharges",
+                "metricQueryType": 0,
+                "namespace": "AWS/Billing",
+                "period": "",
+                "refId": "C",
+                "region": "default",
+                "statistic": "Minimum"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "R53 Estimated U$S cost",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:684",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:685",
+                "format": "short",
+                "logBase": 1,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          }
+        ],
+        "refresh": false,
+        "schemaVersion": 34,
+        "style": "dark",
+        "tags": [
+          "monitoringartist",
+          "cloudwatch",
+          "Billing",
+          "aws"
+        ],
+        "templating": {
+          "list": [
+            {
+              "current": {
+                "selected": true,
+                "text": "PROD-020462468737",
+                "value": "PROD-020462468737"
+              },
+              "hide": 0,
+              "includeAll": false,
+              "label": "Datasource",
+              "multi": false,
+              "name": "datasource",
+              "options": [],
+              "query": "cloudwatch",
+              "queryValue": "",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "type": "datasource"
+            }
+          ]
+        },
+        "time": {
+          "from": "now/M",
+          "to": "now/M"
+        },
+        "timepicker": {
+          "refresh_intervals": [
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+          ],
+          "time_options": [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+          ]
+        },
+        "timezone": "browser",
+        "title": "AWS Billing Dashboard",
+        "uid": "AWSBillin",
+        "version": 1,
+        "weekStart": ""
+      }

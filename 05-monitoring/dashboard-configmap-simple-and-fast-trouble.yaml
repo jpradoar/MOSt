@@ -1,0 +1,3315 @@
+################################################################
+#
+# Only for long configmap files (use "create")
+# kubectl create -f 
+#
+################################################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-cluster-fast-overview
+  namespace: monitoring
+data:
+  cluster-fast-overview.json: |
+      {
+        "annotations": {
+          "list": [
+            {
+              "$$hashKey": "object:1522",
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+              },
+              "type": "dashboard"
+            }
+          ]
+        },
+        "description": "Simple and fast Troubleshooting Dashboard for kubernetes ",
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "gnetId": 11802,
+        "graphTooltip": 0,
+        "iteration": 1644516393223,
+        "links": [],
+        "liveNow": false,
+        "panels": [
+          {
+            "collapsed": false,
+            "datasource": {
+              "type": "prometheus",
+              "uid": "P1809F7CD0C75ACF3"
+            },
+            "gridPos": {
+              "h": 1,
+              "w": 24,
+              "x": 0,
+              "y": 0
+            },
+            "id": 41,
+            "panels": [],
+            "title": "Namespace $namespace details",
+            "type": "row"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "P1809F7CD0C75ACF3"
+            },
+            "description": "Similar to:   kubectl get nodes\n-\n\nFor more details use dashboards:\n- \n- Default / Nodes",
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "fixedColor": "rgb(31, 120, 193)",
+                  "mode": "fixed"
+                },
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "text": "N/A"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    },
+                    {
+                      "color": "#37872D",
+                      "value": 0
+                    },
+                    {
+                      "color": "#d44a3a",
+                      "value": 1
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 0,
+              "y": 1
+            },
+            "id": 126,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "area",
+              "justifyMode": "center",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "exemplar": true,
+                "expr": "count(kube_node_info)",
+                "hide": false,
+                "instant": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "K8s Total nodes",
+            "type": "stat"
+          },
+          {
+            "description": "Similar to:   kubectl get pod \n-",
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "fixedColor": "rgb(31, 120, 193)",
+                  "mode": "fixed"
+                },
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "text": "N/A"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    },
+                    {
+                      "color": "#37872D",
+                      "value": 0
+                    },
+                    {
+                      "color": "#d44a3a",
+                      "value": 1
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 2,
+              "y": 1
+            },
+            "id": 91,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "expr": "sum(count by (pod)(container_spec_memory_reservation_limit_bytes{namespace=\"$namespace\",container=\"POD\"}))",
+                "hide": false,
+                "instant": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "Total  pods",
+            "type": "stat"
+          },
+          {
+            "description": "",
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "fixedColor": "rgb(31, 120, 193)",
+                  "mode": "fixed"
+                },
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "text": "N/A"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 4,
+              "y": 1
+            },
+            "id": 44,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "count(kube_pod_container_status_ready{namespace=\"$namespace\"})",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "{{pod}}",
+                "refId": "A"
+              }
+            ],
+            "title": "Container Ready",
+            "type": "stat"
+          },
+          {
+            "description": "",
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "text": "N/A"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    },
+                    {
+                      "color": "#37872D",
+                      "value": 0
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 6,
+              "y": 1
+            },
+            "id": 146,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "sum(kube_pod_container_status_waiting{namespace=\"$namespace\"})",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "{{pod}}",
+                "refId": "A"
+              }
+            ],
+            "title": "Container Waiting",
+            "type": "stat"
+          },
+          {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "text": "N/A"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    },
+                    {
+                      "color": "#37872D",
+                      "value": 0
+                    },
+                    {
+                      "color": "dark-yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 3
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 8,
+              "y": 1
+            },
+            "id": 42,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "value",
+              "graphMode": "none",
+              "justifyMode": "center",
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum(kube_pod_container_status_terminated{namespace=\"$namespace\"})",
+                "hide": false,
+                "instant": false,
+                "interval": "",
+                "legendFormat": "{{pod}}",
+                "refId": "A"
+              }
+            ],
+            "title": "Terminated pods",
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "P1809F7CD0C75ACF3"
+            },
+            "description": "Show Persisten Volumes\n-\n\nFor more details use dashboard\n-\n- Default / kubernetes / Persistent Volumes",
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#37872D",
+                        "text": "0"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 10,
+              "y": 1
+            },
+            "id": 52,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "none",
+              "graphMode": "area",
+              "justifyMode": "center",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "expr": "count(kube_persistentvolumeclaim_info{namespace=\"$namespace\"}) ",
+                "hide": false,
+                "instant": false,
+                "legendFormat": "{{pod}}",
+                "refId": "A"
+              },
+              {
+                "expr": "",
+                "hide": true,
+                "refId": "B"
+              }
+            ],
+            "title": "PVCs",
+            "type": "stat"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "P1809F7CD0C75ACF3"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#37872D",
+                        "text": "0"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    },
+                    {
+                      "color": "#37872D",
+                      "value": 0
+                    },
+                    {
+                      "color": "#d44a3a"
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 12,
+              "y": 1
+            },
+            "id": 107,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "value",
+              "fieldOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "graphMode": "area",
+              "justifyMode": "center",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "mean"
+                ],
+                "fields": "",
+                "values": true
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "expr": "count(kube_persistentvolume_status_phase{job=\"kube-state-metrics\",phase=\"Pending\",namespace=\"$namespace\"} != 0)",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "PVCs Pending",
+            "type": "stat"
+          },
+          {
+            "fieldConfig": {
+              "defaults": {
+                "mappings": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#37872D",
+                        "text": "0"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#299c46",
+                      "value": null
+                    },
+                    {
+                      "color": "#37872D",
+                      "value": 0
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 3,
+              "w": 2,
+              "x": 14,
+              "y": 1
+            },
+            "id": 106,
+            "links": [],
+            "maxDataPoints": 100,
+            "options": {
+              "colorMode": "value",
+              "fieldOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ]
+              },
+              "graphMode": "area",
+              "justifyMode": "center",
+              "orientation": "horizontal",
+              "reduceOptions": {
+                "calcs": [
+                  "mean"
+                ],
+                "fields": "",
+                "values": true
+              },
+              "text": {},
+              "textMode": "auto"
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "count(kube_persistentvolume_status_phase{job=\"kube-state-metrics\",phase=\"Failed\",namespace=\"$namespace\"} != 0) ",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "PVCs Failed",
+            "type": "stat"
+          },
+          {
+            "description": "###  Similar to run:   kubectl  -n $namespace get pod -o wide\n\n\n# The CrashLoopBackOff:\n\n- Insufficient resources—lack of resources prevents the container from loading\n- Locked file—a file was already locked by another container\n- Locked database—the database is being used and locked by other pods\n- Failed reference—reference to scripts or binaries that are not present on the container\n- Setup error—an issue with the init-container setup in Kubernetes\n- Config loading error—a server cannot load the configuration file\n- Misconfigurations—a general file system misconfiguration\n- Connection issues—DNS or kube-DNS is not able to connect to a third-party service\n- Deploying failed services—an attempt to deploy services/applications that have already failed (e.g. due to a lack of access to other services)\n\n# The ImagePullBackOff:\n\nmeans that a Pod couldn’t start because Kubernetes could not pull a container image. The ‘BackOff’ part indicates that Kubernetes will keep trying to pull the image, with an increasing back-off delay.  \n- check  if image exist\n- check if image tag is correct\n- check if you have the secret to pull image from private registry\n- check if  the value \"imagePullSecrets\" is right configured in your deployment  (use GIT repo to check it)\n",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "align": "auto",
+                  "displayMode": "color-text",
+                  "filterable": true
+                },
+                "links": [],
+                "mappings": [],
+                "noValue": "--",
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Status"
+                  },
+                  "properties": [
+                    {
+                      "id": "mappings",
+                      "value": [
+                        {
+                          "options": {
+                            "0": {
+                              "index": 1,
+                              "text": "Down"
+                            },
+                            "1": {
+                              "index": 0,
+                              "text": "Up"
+                            }
+                          },
+                          "type": "value"
+                        },
+                        {
+                          "options": {
+                            "match": "null",
+                            "result": {
+                              "color": "dark-purple",
+                              "index": 2,
+                              "text": "N/A"
+                            }
+                          },
+                          "type": "special"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "thresholds",
+                      "value": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "dark-red",
+                            "value": null
+                          },
+                          {
+                            "color": "dark-green",
+                            "value": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": "custom.displayMode",
+                      "value": "color-background"
+                    },
+                    {
+                      "id": "custom.width",
+                      "value": 82
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Age"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 82
+                    },
+                    {
+                      "id": "unit",
+                      "value": "s"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "pod"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 833
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "node"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 235
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Restarts"
+                  },
+                  "properties": [
+                    {
+                      "id": "unit",
+                      "value": "none"
+                    },
+                    {
+                      "id": "thresholds",
+                      "value": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "text",
+                            "value": null
+                          },
+                          {
+                            "color": "dark-yellow",
+                            "value": 4
+                          },
+                          {
+                            "color": "red",
+                            "value": 6
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": "custom.displayMode",
+                      "value": "color-text"
+                    },
+                    {
+                      "id": "custom.width",
+                      "value": 89
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "POD"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 430
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Container"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 277
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "reason"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 182
+                    },
+                    {
+                      "id": "mappings",
+                      "value": [
+                        {
+                          "options": {
+                            "CrashLoopBackOff": {
+                              "color": "dark-red",
+                              "index": 2
+                            },
+                            "ImagePullBackOff": {
+                              "color": "dark-orange",
+                              "index": 1
+                            }
+                          },
+                          "type": "value"
+                        },
+                        {
+                          "options": {
+                            "match": "null",
+                            "result": {
+                              "color": "transparent",
+                              "index": 0
+                            }
+                          },
+                          "type": "special"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "custom.displayMode",
+                      "value": "color-background"
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "left"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Reason"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 131
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Container Image"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 187
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 7,
+              "w": 13,
+              "x": 0,
+              "y": 4
+            },
+            "id": 104,
+            "links": [],
+            "options": {
+              "angular": {
+                "columns": [],
+                "fontSize": "100%",
+                "options": {},
+                "showHeader": true,
+                "sort": {
+                  "col": 0,
+                  "desc": true
+                },
+                "styles": [
+                  {
+                    "alias": "Time",
+                    "align": "auto",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "hidden"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/pod.*/",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "node",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "__name__",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/created.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/prom.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/job/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "service",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "instance",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "endpoint",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "uid",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "namespace",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "Value",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short",
+                    "valueMaps": []
+                  }
+                ],
+                "transform": "table"
+              },
+              "footer": {
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "frameIndex": 0,
+              "showHeader": true,
+              "sortBy": [
+                {
+                  "desc": true,
+                  "displayName": "Age"
+                }
+              ]
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "kube_pod_container_status_ready{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "kube_pod_container_status_restarts_total{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": true,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "B"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "kube_pod_info{namespace=\"$namespace\"}",
+                "format": "table",
+                "interval": "",
+                "legendFormat": "",
+                "refId": "C"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "time() - kube_pod_start_time{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "D"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "kube_pod_container_status_waiting_reason{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "E"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "kube_pod_container_info{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "F"
+              }
+            ],
+            "title": "POD Status in $namespace namespace",
+            "transformations": [
+              {
+                "id": "filterFieldsByName",
+                "options": {
+                  "include": {
+                    "names": [
+                      "pod",
+                      "Value #A",
+                      "host_ip",
+                      "node",
+                      "pod_ip",
+                      "Value #D",
+                      "image",
+                      "Value #B"
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "seriesToColumns",
+                "options": {
+                  "byField": "pod"
+                }
+              },
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "Value #B": false,
+                    "Value #E": true,
+                    "container 2": true,
+                    "container 3": true,
+                    "container 4": true,
+                    "container 5": true,
+                    "container 6": true,
+                    "host_ip": true,
+                    "node": false,
+                    "pod_ip": true
+                  },
+                  "indexByName": {
+                    "Value #A": 2,
+                    "Value #B": 4,
+                    "Value #D": 5,
+                    "Value #E": 10,
+                    "container 1": 1,
+                    "container 2": 11,
+                    "container 3": 12,
+                    "container 4": 13,
+                    "container 5": 14,
+                    "container 6": 15,
+                    "host_ip": 8,
+                    "image": 6,
+                    "node": 9,
+                    "pod": 0,
+                    "pod_ip": 7,
+                    "reason": 3
+                  },
+                  "renameByName": {
+                    "Value #A": "Status",
+                    "Value #B": "Restarts",
+                    "Value #C": "Age",
+                    "Value #D": "Age",
+                    "container 1": "Container",
+                    "image": "Container Image",
+                    "node": "K8s Node",
+                    "pod": "POD",
+                    "pod_ip": "Pod IP",
+                    "reason": "Reason"
+                  }
+                }
+              }
+            ],
+            "transparent": true,
+            "type": "table"
+          },
+          {
+            "description": "",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "align": "left",
+                  "displayMode": "color-text",
+                  "filterable": true
+                },
+                "links": [],
+                "mappings": [],
+                "noValue": "--",
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "none"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Value"
+                  },
+                  "properties": [
+                    {
+                      "id": "thresholds",
+                      "value": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": null
+                          },
+                          {
+                            "color": "dark-yellow",
+                            "value": 3
+                          },
+                          {
+                            "color": "dark-red",
+                            "value": 5
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": "custom.width",
+                      "value": 97
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "pod"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 444
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "POD"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 392
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 7,
+              "w": 7,
+              "x": 13,
+              "y": 4
+            },
+            "id": 144,
+            "links": [],
+            "options": {
+              "angular": {
+                "columns": [],
+                "fontSize": "100%",
+                "options": {},
+                "showHeader": true,
+                "sort": {
+                  "col": 0,
+                  "desc": true
+                },
+                "styles": [
+                  {
+                    "alias": "Time",
+                    "align": "auto",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "hidden"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/pod.*/",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "node",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "__name__",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/created.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/prom.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/job/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "service",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "instance",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "endpoint",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "uid",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "namespace",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "Value",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short",
+                    "valueMaps": []
+                  }
+                ],
+                "transform": "table"
+              },
+              "footer": {
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "frameIndex": 0,
+              "showHeader": true,
+              "sortBy": [
+                {
+                  "desc": true,
+                  "displayName": "Restarts"
+                }
+              ]
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "kube_pod_container_status_restarts_total{namespace=\"$namespace\",pod=~\".*\"}",
+                "format": "table",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "POD Restarts ",
+            "transformations": [
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "Time": true,
+                    "__name__": true,
+                    "container": true,
+                    "instance": true,
+                    "job": true,
+                    "namespace": true,
+                    "uid": true
+                  },
+                  "indexByName": {
+                    "Time": 3,
+                    "Value": 1,
+                    "__name__": 4,
+                    "container": 2,
+                    "instance": 5,
+                    "job": 6,
+                    "namespace": 7,
+                    "pod": 0,
+                    "uid": 8
+                  },
+                  "renameByName": {
+                    "Value": "Restarts",
+                    "container": "",
+                    "pod": "POD"
+                  }
+                }
+              }
+            ],
+            "transparent": true,
+            "type": "table"
+          },
+          {
+            "description": "### OOMKilled (exit code 137)\nThe OOMKilled error, also indicated by exit code 137, means that a container or pod was terminated because they used more memory than allowed. OOM stands for “Out Of Memory”.\nIf a container uses more memory than its memory limit, it is terminated with an OOMKilled status. Similarly, if overall memory usage on all containers, or all pods on the node, exceeds the defined limit, one or more pods may be terminated.\n\n# Error\nError code or Exit Code 1 means that a container terminated, typically due to an application error or an invalid reference.\n\n",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "align": "auto",
+                  "displayMode": "color-text",
+                  "filterable": true
+                },
+                "links": [],
+                "mappings": [
+                  {
+                    "options": {
+                      "Completed": {
+                        "color": "dark-green",
+                        "index": 2
+                      },
+                      "Error": {
+                        "color": "dark-yellow",
+                        "index": 1
+                      },
+                      "OOMKilled": {
+                        "color": "dark-red",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ],
+                "noValue": "--",
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Time"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 238
+                    },
+                    {
+                      "id": "unit",
+                      "value": "date"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "POD"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 472
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Container"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 238
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 6,
+              "w": 6,
+              "x": 0,
+              "y": 11
+            },
+            "id": 143,
+            "links": [],
+            "options": {
+              "angular": {
+                "columns": [],
+                "fontSize": "100%",
+                "options": {},
+                "showHeader": true,
+                "sort": {
+                  "col": 0,
+                  "desc": true
+                },
+                "styles": [
+                  {
+                    "alias": "Time",
+                    "align": "auto",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "hidden"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/pod.*/",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "node",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "__name__",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/created.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/prom.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/job/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "service",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "instance",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "endpoint",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "uid",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "namespace",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "Value",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short",
+                    "valueMaps": []
+                  }
+                ],
+                "transform": "table"
+              },
+              "footer": {
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "frameIndex": 0,
+              "showHeader": true,
+              "sortBy": []
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "kube_pod_container_status_last_terminated_reason{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "Last Terminated container status reason ",
+            "transformations": [
+              {
+                "id": "filterFieldsByName",
+                "options": {
+                  "include": {
+                    "names": [
+                      "pod",
+                      "reason",
+                      "container"
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "seriesToColumns",
+                "options": {
+                  "byField": "pod"
+                }
+              },
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "Value #E": true,
+                    "container 2": true,
+                    "container 3": true,
+                    "container 4": true,
+                    "container 5": true,
+                    "container 6": true,
+                    "host_ip": true,
+                    "node": false,
+                    "pod": true,
+                    "pod_ip": true
+                  },
+                  "indexByName": {
+                    "container": 0,
+                    "pod": 2,
+                    "reason": 1
+                  },
+                  "renameByName": {
+                    "Time": "Time",
+                    "Value #A": "Status",
+                    "Value #B": "Restarts",
+                    "Value #C": "Age",
+                    "Value #D": "Age",
+                    "container": "Container",
+                    "container 1": "Container",
+                    "image": "Container Image",
+                    "node": "K8s Node",
+                    "pod": "POD",
+                    "pod_ip": "Pod IP",
+                    "reason": "Last crash reason "
+                  }
+                }
+              }
+            ],
+            "transparent": true,
+            "type": "table"
+          },
+          {
+            "description": "# Waiting reason\npods not running, this status is caused because pod can't terminate of start for any reason. (see Reason)\n\n# ImagePullBackOff or ErrImagePull:\nmeans that a Pod couldn’t start because Kubernetes could not pull a container image. The ‘BackOff’ part indicates that Kubernetes will keep trying to pull the image, with an increasing back-off delay.  \n\n# CrashloopBackOff \nIts means that you have a pod starting, crashing, starting again, and then crashing again.",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "align": "auto",
+                  "displayMode": "color-text",
+                  "filterable": true
+                },
+                "links": [],
+                "mappings": [
+                  {
+                    "options": {
+                      "ContainerCreating": {
+                        "color": "light-blue",
+                        "index": 0
+                      },
+                      "CrashLoopBackOff": {
+                        "color": "dark-red",
+                        "index": 4
+                      },
+                      "ErrImagePull": {
+                        "color": "dark-orange",
+                        "index": 1
+                      },
+                      "ImagePullBackOff": {
+                        "color": "dark-orange",
+                        "index": 2
+                      },
+                      "Terminated": {
+                        "color": "dark-purple",
+                        "index": 5
+                      },
+                      "Waiting": {
+                        "color": "dark-orange",
+                        "index": 3
+                      }
+                    },
+                    "type": "value"
+                  }
+                ],
+                "noValue": "--",
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "decbytes"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Time"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 238
+                    },
+                    {
+                      "id": "unit",
+                      "value": "date"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "POD"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 460
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 6,
+              "w": 13,
+              "x": 6,
+              "y": 11
+            },
+            "id": 145,
+            "links": [],
+            "options": {
+              "angular": {
+                "columns": [],
+                "fontSize": "100%",
+                "options": {},
+                "showHeader": true,
+                "sort": {
+                  "col": 0,
+                  "desc": true
+                },
+                "styles": [
+                  {
+                    "alias": "Time",
+                    "align": "auto",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "hidden"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/pod.*/",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "node",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "__name__",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/created.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/prom.*/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "/job/",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "service",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "instance",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "endpoint",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "uid",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "namespace",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                  },
+                  {
+                    "alias": "",
+                    "align": "auto",
+                    "colors": [
+                      "rgba(245, 54, 54, 0.9)",
+                      "rgba(237, 129, 40, 0.89)",
+                      "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "Value",
+                    "thresholds": [],
+                    "type": "string",
+                    "unit": "short",
+                    "valueMaps": []
+                  }
+                ],
+                "transform": "table"
+              },
+              "footer": {
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "frameIndex": 0,
+              "showHeader": true,
+              "sortBy": []
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "kube_pod_container_status_waiting_reason{namespace=\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "Pods Not running reason",
+            "transformations": [
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "Time": true,
+                    "Value": true,
+                    "__name__": true,
+                    "instance": true,
+                    "job": true,
+                    "namespace": true,
+                    "uid": true
+                  },
+                  "indexByName": {
+                    "Time": 3,
+                    "Value": 9,
+                    "__name__": 4,
+                    "container": 1,
+                    "instance": 5,
+                    "job": 6,
+                    "namespace": 7,
+                    "pod": 0,
+                    "reason": 2,
+                    "uid": 8
+                  },
+                  "renameByName": {
+                    "container": "Container",
+                    "pod": "POD",
+                    "reason": "Waiting reason"
+                  }
+                }
+              }
+            ],
+            "transparent": true,
+            "type": "table"
+          },
+          {
+            "description": "###  Similar to:  kubectl -n $namespace describe VOLUME-NAME",
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "custom": {
+                  "align": "left",
+                  "displayMode": "auto",
+                  "filterable": true
+                },
+                "mappings": [],
+                "noValue": "--",
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "transparent",
+                      "value": null
+                    }
+                  ]
+                },
+                "unit": "bytes"
+              },
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Status"
+                  },
+                  "properties": [
+                    {
+                      "id": "mappings",
+                      "value": [
+                        {
+                          "options": {
+                            "0": {
+                              "color": "dark-green",
+                              "index": 0,
+                              "text": "Bound"
+                            },
+                            "1": {
+                              "color": "dark-orange",
+                              "index": 1,
+                              "text": "Pending"
+                            },
+                            "2": {
+                              "color": "dark-red",
+                              "index": 2,
+                              "text": "Lost"
+                            }
+                          },
+                          "type": "value"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "custom.displayMode",
+                      "value": "color-text"
+                    },
+                    {
+                      "id": "custom.width",
+                      "value": 75
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "StorageClass"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 150
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Size"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 111
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Used"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 113
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Name"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 337
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Available"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 95
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "VolumeID"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 359
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Used (%)"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.displayMode",
+                      "value": "color-background"
+                    },
+                    {
+                      "id": "thresholds",
+                      "value": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "transparent",
+                            "value": null
+                          },
+                          {
+                            "color": "dark-yellow",
+                            "value": 70
+                          },
+                          {
+                            "color": "dark-red",
+                            "value": 80
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": "decimals",
+                      "value": 1
+                    },
+                    {
+                      "id": "unit",
+                      "value": "percent"
+                    },
+                    {
+                      "id": "custom.width",
+                      "value": 90
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "pod"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 261
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "container"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 165
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Volume Name"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 192
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "POD"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 255
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Mount Name"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.width",
+                      "value": 131
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Used By POD"
+                  },
+                  "properties": [
+                    {
+                      "id": "mappings",
+                      "value": [
+                        {
+                          "options": {
+                            "match": "null",
+                            "result": {
+                              "color": "dark-red",
+                              "index": 0,
+                              "text": "Not Attached"
+                            }
+                          },
+                          "type": "special"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "custom.displayMode",
+                      "value": "color-background"
+                    },
+                    {
+                      "id": "custom.width",
+                      "value": 313
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos": {
+              "h": 5,
+              "w": 22,
+              "x": 0,
+              "y": 17
+            },
+            "id": 138,
+            "options": {
+              "footer": {
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "showHeader": true,
+              "sortBy": [
+                {
+                  "desc": true,
+                  "displayName": "Size"
+                }
+              ]
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum by (persistentvolumeclaim,namespace,storageclass,volumename) (kube_persistentvolumeclaim_info{namespace=\"$namespace\"})",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_capacity_bytes{namespace=\"$namespace\"})",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "B"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_used_bytes{namespace=\"$namespace\"})",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "C"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_available_bytes{namespace=\"$namespace\"})",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "D"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum(kube_persistentvolumeclaim_status_phase{namespace=\"$namespace\",phase=~\"(Pending|Lost)\"}) by (persistentvolumeclaim) + sum(kube_persistentvolumeclaim_status_phase{namespace=\"$namespace\",phase=~\"(Lost)\"}) by (persistentvolumeclaim)",
+                "format": "table",
+                "hide": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "E"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_used_bytes{namespace=~\"$namespace\"}/kubelet_volume_stats_capacity_bytes{namespace=~\"$namespace\"} * 100)",
+                "format": "table",
+                "hide": false,
+                "instant": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "F"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": true,
+                "expr": "kube_pod_spec_volumes_persistentvolumeclaims_info{namespace=~\"$namespace\"}",
+                "format": "table",
+                "hide": false,
+                "instant": false,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "G"
+              }
+            ],
+            "title": "Persistent Volume Claim in namespace:  $namespace",
+            "transformations": [
+              {
+                "id": "seriesToColumns",
+                "options": {
+                  "byField": "persistentvolumeclaim"
+                }
+              },
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "Time": true,
+                    "Time 1": true,
+                    "Time 2": true,
+                    "Time 3": true,
+                    "Time 4": true,
+                    "Time 5": true,
+                    "Time 7": false,
+                    "Value": false,
+                    "Value #A": true,
+                    "Value #E": false,
+                    "Value #G": true,
+                    "__name__": true,
+                    "container": true,
+                    "instance": true,
+                    "job": true,
+                    "namespace": true,
+                    "namespace 2": false,
+                    "storageclass": false,
+                    "uid": true,
+                    "volume": true,
+                    "volumename": false
+                  },
+                  "indexByName": {
+                    "Time 1": 17,
+                    "Time 2": 19,
+                    "Time 3": 20,
+                    "Time 4": 21,
+                    "Time 5": 22,
+                    "Time 6": 23,
+                    "Time 7": 24,
+                    "Value #A": 10,
+                    "Value #B": 4,
+                    "Value #C": 5,
+                    "Value #D": 6,
+                    "Value #E": 7,
+                    "Value #F": 8,
+                    "Value #G": 16,
+                    "__name__": 11,
+                    "container": 12,
+                    "instance": 13,
+                    "job": 14,
+                    "namespace 1": 18,
+                    "namespace 2": 25,
+                    "persistentvolumeclaim": 2,
+                    "pod": 0,
+                    "storageclass": 3,
+                    "uid": 15,
+                    "volume": 1,
+                    "volumename": 9
+                  },
+                  "renameByName": {
+                    "Time 7": "",
+                    "Value #A": "",
+                    "Value #B": "Size",
+                    "Value #C": "Used",
+                    "Value #D": "Available",
+                    "Value #E": "Status",
+                    "Value #F": "Used (%)",
+                    "persistentvolumeclaim": "Volume Name",
+                    "pod": "Used By POD",
+                    "storageclass": "StorageClass",
+                    "volume": "Mount Name",
+                    "volumename": "VolumeID"
+                  }
+                }
+              }
+            ],
+            "type": "table"
+          },
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P982945308D3682D1"
+            },
+            "description": "Similar to:    kubectl logs pod \n- \n-\n\nFor more info use dashboards\n-\n- Default / Logs by App\n\n",
+            "gridPos": {
+              "h": 6,
+              "w": 22,
+              "x": 0,
+              "y": 22
+            },
+            "id": 134,
+            "options": {
+              "dedupStrategy": "none",
+              "enableLogDetails": true,
+              "prettifyLogMessage": false,
+              "showCommonLabels": false,
+              "showLabels": true,
+              "showTime": false,
+              "sortOrder": "Descending",
+              "wrapLogMessage": true
+            },
+            "targets": [
+              {
+                "expr": "{stream=~\"stderr\", namespace=\"$namespace\", container=\"$container_error\"}",
+                "instant": false,
+                "maxLines": 100,
+                "range": true,
+                "refId": "A"
+              }
+            ],
+            "title": "Last 100  error logs from  container:  $container_error",
+            "type": "logs"
+          },
+          {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "custom": {
+                  "align": "auto",
+                  "displayMode": "auto"
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 5,
+              "w": 20,
+              "x": 0,
+              "y": 28
+            },
+            "id": 142,
+            "options": {
+              "footer": {
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "showHeader": true
+            },
+            "pluginVersion": "8.3.4",
+            "targets": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "P1809F7CD0C75ACF3"
+                },
+                "exemplar": false,
+                "expr": "kube_node_info",
+                "format": "table",
+                "instant": true,
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "title": "Kubernetes Node Info",
+            "transformations": [
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "Time": true,
+                    "Value": true,
+                    "__name__": true,
+                    "container": true,
+                    "container_runtime_version": false,
+                    "instance": true,
+                    "internal_ip": true,
+                    "job": true,
+                    "kernel_version": true,
+                    "kubelet_version": false,
+                    "os_image": true,
+                    "provider_id": true
+                  },
+                  "indexByName": {
+                    "Time": 4,
+                    "Value": 13,
+                    "__name__": 5,
+                    "container": 6,
+                    "container_runtime_version": 1,
+                    "instance": 7,
+                    "internal_ip": 8,
+                    "job": 9,
+                    "kernel_version": 10,
+                    "kubelet_version": 3,
+                    "kubeproxy_version": 2,
+                    "node": 0,
+                    "os_image": 11,
+                    "provider_id": 12
+                  },
+                  "renameByName": {
+                    "container_runtime_version": "Docker version",
+                    "kubelet_version": "Kubelet Version",
+                    "kubeproxy_version": "KubeProxy Version",
+                    "node": "K8s Node"
+                  }
+                }
+              }
+            ],
+            "type": "table"
+          }
+        ],
+        "refresh": false,
+        "schemaVersion": 34,
+        "style": "dark",
+        "tags": [
+          "troubleshooting",
+          "trouble",
+          "pod",
+          "pods",
+          "kubectl",
+          "fast view",
+          "sre",
+          "simple",
+          "pod"
+        ],
+        "templating": {
+          "list": [
+            {
+              "current": {
+                "selected": true,
+                "text": "default",
+                "value": "default"
+              },
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P1809F7CD0C75ACF3"
+              },
+              "definition": "query_result(kube_namespace_labels)",
+              "hide": 0,
+              "includeAll": false,
+              "multi": false,
+              "name": "namespace",
+              "options": [],
+              "query": {
+                "query": "query_result(kube_namespace_labels)",
+                "refId": "Prometheus-namespace-Variable-Query"
+              },
+              "refresh": 1,
+              "regex": "/.*namespace=\"([^\"]*).*/",
+              "skipUrlSync": false,
+              "sort": 0,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            },
+            {
+              "current": {
+                "selected": false,
+                "text": "telegraf",
+                "value": "telegraf"
+              },
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P1809F7CD0C75ACF3"
+              },
+              "definition": "kube_pod_container_status_waiting_reason{namespace=\"$namespace\"}",
+              "hide": 0,
+              "includeAll": false,
+              "label": "container_error",
+              "multi": false,
+              "name": "container_error",
+              "options": [],
+              "query": {
+                "query": "kube_pod_container_status_waiting_reason{namespace=\"$namespace\"}",
+                "refId": "StandardVariableQuery"
+              },
+              "refresh": 1,
+              "regex": "/.*container=\"([^\"]*).*/",
+              "skipUrlSync": false,
+              "sort": 0,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            }
+          ]
+        },
+        "time": {
+          "from": "now-5m",
+          "to": "now"
+        },
+        "timepicker": {
+          "refresh_intervals": [
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+          ]
+        },
+        "timezone": "",
+        "title": "Kubernetes Simple and Fast Troubleshooting (by jprado)",
+        "uid": "SaFt0000001",
+        "version": 1,
+        "weekStart": ""
+      }

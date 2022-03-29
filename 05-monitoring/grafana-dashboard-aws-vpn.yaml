@@ -1,0 +1,896 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-aws-vpn
+  namespace: monitoring
+data:
+  aws-vpn.json: |-
+      {
+        "annotations": {
+          "list": [
+            {
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+              },
+              "type": "dashboard"
+            }
+          ]
+        },
+        "description": "Visualize AWS VPN metrics",
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "gnetId": 2969,
+        "graphTooltip": 0,
+        "iteration": 1646402061752,
+        "links": [],
+        "liveNow": false,
+        "panels": [
+          {
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "description": "# Filtra los datos de las métricas en función de la dirección IP del túnel de la gateway privada virtual.",
+            "gridPos": {
+              "h": 3,
+              "w": 22,
+              "x": 0,
+              "y": 0
+            },
+            "id": 15,
+            "links": [],
+            "options": {
+              "content": "<h1><p style=\"text-align: center;background-color:blue;color:white\">FILTER BY IPs: $vpnIP</h1>\n",
+              "mode": "html"
+            },
+            "pluginVersion": "8.4.3",
+            "title": "IPs $vpnIP",
+            "type": "text"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "description": "# TunnelDataIn\n\t\n\nLos bytes recibidos en el lado de AWS de la conexión a través del túnel de VPN desde una gateway de cliente. Cada punto de datos de la métrica representa el número de bytes recibidos después del punto de datos anterior. Use la estadística Sum para mostrar el número total de bytes recibidos durante el periodo.\n\nEsta métrica cuenta los datos después del descifrado.\n\n# TunnelDataOut\n\t\n\nLos bytes enviados desde el lado de AWS de la conexión a través del túnel de VPN a una gateway de cliente. Cada punto de datos de la métrica representa el número de bytes enviados después del punto de datos anterior. Use la estadística Sum para mostrar el número total de bytes enviados durante el periodo.\n\nEsta métrica cuenta los datos antes del cifrado.\n\nUnidades: bytes",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "fillGradient": 0,
+            "grid": {},
+            "gridPos": {
+              "h": 9,
+              "w": 11,
+              "x": 0,
+              "y": 3
+            },
+            "hiddenSeries": false,
+            "id": 7,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "null as zero",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.4.3",
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+              {
+                "alias": "Latency_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "TargetResponseTime_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "ClientConnections_Sum",
+                "yaxis": 2
+              }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "LDCoBkF7k"
+                },
+                "dimensions": {
+                  "TunnelIpAddress": "$vpnIP"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "TunnelDataIn",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/VPN",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "LDCoBkF7k"
+                },
+                "dimensions": {
+                  "TunnelIpAddress": "$vpnIP"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "TunnelDataOut",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/VPN",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "TunnelDataIn / TunnelDataOut $vpnIP",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:196",
+                "format": "bytes",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:197",
+                "format": "none",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "description": "# TunnelState\n\t\n\nEl estado de los túneles. Para las VPN estáticas, 0 indica DOWN y 1 indica UP. Para las VPN de BGP, 1 indica ESTABLISHED y 0 se utiliza para los demás estados. Para los dos tipos de VPN, los valores entre 0 y 1 indican que al menos que un túnel no es UP.\n\nUnidades: valor fraccional entre 0 y 1 ",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "fillGradient": 0,
+            "grid": {},
+            "gridPos": {
+              "h": 9,
+              "w": 11,
+              "x": 11,
+              "y": 3
+            },
+            "hiddenSeries": false,
+            "id": 12,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.4.3",
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+              {
+                "alias": "Latency_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "TargetResponseTime_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "PermittedThroughput_Average",
+                "yaxis": 2
+              }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "LDCoBkF7k"
+                },
+                "dimensions": {
+                  "TunnelIpAddress": "$vpnIP"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "TunnelState",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/VPN",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "TunnelState $vpnIP",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:134",
+                "format": "short",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:135",
+                "format": "Bps",
+                "logBase": 1,
+                "min": 0,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "datasource": {
+              "uid": "${datasource}"
+            },
+            "description": "# Filtra los datos de las métricas por el ID de Site-to-Site VPN.",
+            "gridPos": {
+              "h": 3,
+              "w": 22,
+              "x": 0,
+              "y": 12
+            },
+            "id": 16,
+            "links": [],
+            "options": {
+              "content": "<h1><p style=\"text-align: center;background-color:green;color:white\">FILTER BY VPN-id:  $vpnid </h1>\n",
+              "mode": "html"
+            },
+            "pluginVersion": "8.4.3",
+            "title": "IDs $vpnid",
+            "type": "text"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "description": "# TunnelDataIn\n\t\n\nLos bytes recibidos en el lado de AWS de la conexión a través del túnel de VPN desde una gateway de cliente. Cada punto de datos de la métrica representa el número de bytes recibidos después del punto de datos anterior. Use la estadística Sum para mostrar el número total de bytes recibidos durante el periodo.\n\nEsta métrica cuenta los datos después del descifrado.\n\n# TunnelDataOut\n\t\n\nLos bytes enviados desde el lado de AWS de la conexión a través del túnel de VPN a una gateway de cliente. Cada punto de datos de la métrica representa el número de bytes enviados después del punto de datos anterior. Use la estadística Sum para mostrar el número total de bytes enviados durante el periodo.\n\nEsta métrica cuenta los datos antes del cifrado.\n\nUnidades: bytes",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "fillGradient": 0,
+            "grid": {},
+            "gridPos": {
+              "h": 9,
+              "w": 11,
+              "x": 0,
+              "y": 15
+            },
+            "hiddenSeries": false,
+            "id": 13,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "null as zero",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.4.3",
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+              {
+                "alias": "Latency_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "TargetResponseTime_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "ClientConnections_Sum",
+                "yaxis": 2
+              }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "LDCoBkF7k"
+                },
+                "dimensions": {
+                  "VpnId": "$vpnid"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "TunnelDataIn",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/VPN",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              },
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "LDCoBkF7k"
+                },
+                "dimensions": {
+                  "TunnelIpAddress": "$vpnIP"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "TunnelDataOut",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/VPN",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "",
+                "queryMode": "Metrics",
+                "refId": "B",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "TunnelDataIn / TunnelDataOut $vpnid",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:346",
+                "format": "bytes",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:347",
+                "format": "none",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "type": "cloudwatch",
+              "uid": "${datasource}"
+            },
+            "description": "# TunnelState\n\t\n\nEl estado de los túneles. Para las VPN estáticas, 0 indica DOWN y 1 indica UP. Para las VPN de BGP, 1 indica ESTABLISHED y 0 se utiliza para los demás estados. Para los dos tipos de VPN, los valores entre 0 y 1 indican que al menos que un túnel no es UP.\n\nUnidades: valor fraccional entre 0 y 1 ",
+            "editable": true,
+            "error": false,
+            "fill": 1,
+            "fillGradient": 0,
+            "grid": {},
+            "gridPos": {
+              "h": 9,
+              "w": 11,
+              "x": 11,
+              "y": 15
+            },
+            "hiddenSeries": false,
+            "id": 14,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": true,
+              "max": true,
+              "min": true,
+              "show": true,
+              "sort": "current",
+              "sortDesc": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 2,
+            "links": [],
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "8.4.3",
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+              {
+                "alias": "Latency_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "TargetResponseTime_Average",
+                "yaxis": 2
+              },
+              {
+                "alias": "PermittedThroughput_Average",
+                "yaxis": 2
+              }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "",
+                "application": {
+                  "filter": ""
+                },
+                "datasource": {
+                  "type": "cloudwatch",
+                  "uid": "LDCoBkF7k"
+                },
+                "dimensions": {
+                  "VpnId": "$vpnid"
+                },
+                "expression": "",
+                "functions": [],
+                "group": {
+                  "filter": ""
+                },
+                "host": {
+                  "filter": ""
+                },
+                "id": "",
+                "item": {
+                  "filter": ""
+                },
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "TunnelState",
+                "metricQueryType": 0,
+                "mode": 0,
+                "namespace": "AWS/VPN",
+                "options": {
+                  "showDisabledItems": false
+                },
+                "period": "",
+                "queryMode": "Metrics",
+                "refId": "A",
+                "region": "$region",
+                "sqlExpression": "",
+                "statistic": "Average"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "TunnelState $vpnid",
+            "tooltip": {
+              "msResolution": false,
+              "shared": true,
+              "sort": 0,
+              "value_type": "cumulative"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:492",
+                "format": "short",
+                "logBase": 1,
+                "min": 0,
+                "show": true
+              },
+              {
+                "$$hashKey": "object:493",
+                "format": "Bps",
+                "logBase": 1,
+                "min": 0,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          },
+          {
+            "gridPos": {
+              "h": 12,
+              "w": 22,
+              "x": 0,
+              "y": 24
+            },
+            "id": 18,
+            "options": {
+              "content": "# AWS VPN Info\nCustomer gateway device\nA customer gateway device is a physical device or software application on your side of the Site-to-Site VPN connection. You configure the device to work with the Site-to-Site VPN connection. For more information, see Your customer gateway device.\n\nBy default, your customer gateway device must bring up the tunnels for your Site-to-Site VPN connection by generating traffic and initiating the Internet Key Exchange (IKE) negotiation process. You can configure your Site-to-Site VPN connection to specify that AWS must initiate the IKE negotiation process instead. For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/initiate-vpn-tunnels.html\">Site-to-Site VPN tunnel initiation options.</a>\n\n<img src=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/images/vpn-how-it-works-vgw.png\">\n\nFor more info see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/how_it_works.html\">How vpn works</a>",
+              "mode": "markdown"
+            },
+            "pluginVersion": "8.4.3",
+            "title": "INFO",
+            "type": "text"
+          }
+        ],
+        "refresh": false,
+        "schemaVersion": 35,
+        "style": "dark",
+        "tags": [
+          "monitoringartist",
+          "cloudwatch",
+          "vpn",
+          "tunnel",
+          "awsvpn",
+          "trouble",
+          "troubleshoot"
+        ],
+        "templating": {
+          "list": [
+            {
+              "current": {
+                "selected": false,
+                "text": "PROD-020462468737",
+                "value": "PROD-020462468737"
+              },
+              "hide": 0,
+              "includeAll": false,
+              "label": "Datasource",
+              "multi": false,
+              "name": "datasource",
+              "options": [],
+              "query": "cloudwatch",
+              "queryValue": "",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "type": "datasource"
+            },
+            {
+              "current": {
+                "selected": false,
+                "text": "default",
+                "value": "default"
+              },
+              "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+              },
+              "definition": "",
+              "hide": 0,
+              "includeAll": false,
+              "label": "Region",
+              "multi": false,
+              "name": "region",
+              "options": [],
+              "query": "regions()",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "sort": 0,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            },
+            {
+              "current": {
+                "selected": true,
+                "text": [
+                  "18.205.110.123"
+                ],
+                "value": [
+                  "18.205.110.123"
+                ]
+              },
+              "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+              },
+              "definition": "dimension_values($region,AWS/VPN,TunnelState, TunnelIpAddress)",
+              "hide": 0,
+              "includeAll": true,
+              "label": "vpnIP",
+              "multi": true,
+              "name": "vpnIP",
+              "options": [],
+              "query": "dimension_values($region,AWS/VPN,TunnelState, TunnelIpAddress)",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "sort": 0,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            },
+            {
+              "current": {
+                "selected": true,
+                "text": [
+                  "vpn-04bf19202d14ad577"
+                ],
+                "value": [
+                  "vpn-04bf19202d14ad577"
+                ]
+              },
+              "datasource": {
+                "type": "cloudwatch",
+                "uid": "${datasource}"
+              },
+              "definition": "dimension_values($region,AWS/VPN,TunnelState, VpnId)",
+              "description": "vpnid",
+              "hide": 0,
+              "includeAll": false,
+              "label": "vpnid",
+              "multi": true,
+              "name": "vpnid",
+              "options": [],
+              "query": "dimension_values($region,AWS/VPN,TunnelState, VpnId)",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "sort": 0,
+              "type": "query"
+            }
+          ]
+        },
+        "time": {
+          "from": "now-6M",
+          "to": "now"
+        },
+        "timepicker": {
+          "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+          ],
+          "time_options": [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+          ]
+        },
+        "timezone": "browser",
+        "title": "AWS VPN",
+        "uid": "isulLoo7k",
+        "version": 1,
+        "weekStart": ""
+      }

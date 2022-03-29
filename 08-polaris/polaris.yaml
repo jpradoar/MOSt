@@ -1,0 +1,182 @@
+---
+# Source: polaris/templates/0-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: polaris
+---
+# Source: polaris/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: polaris
+  namespace: polaris
+  labels:
+    app: polaris
+---
+# Source: polaris/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: polaris
+  labels:
+    app: polaris
+rules:
+  # required by controller-runtime code doing a cluster wide lookup
+  # when it seems namespace would suffice
+  - apiGroups:
+      - ''
+    resources:
+      - 'nodes'
+    verbs:
+      - 'get'
+      - 'list'
+---
+# Source: polaris/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: polaris-view
+  labels:
+    app: polaris
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: polaris
+    namespace: polaris
+---
+# Source: polaris/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: polaris
+  labels:
+    app: polaris
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: polaris
+subjects:
+  - kind: ServiceAccount
+    name: polaris
+    namespace: polaris
+#---
+# Source: polaris/templates/dashboard.service.yaml
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: polaris-dashboard
+#  namespace: polaris
+#  labels:
+#    app: polaris
+#  annotations:
+#spec:
+#  ports:
+#  - name: http-dashboard
+#    port: 80
+#    protocol: TCP
+#    targetPort: 8080
+#  selector:
+#    app: polaris
+#    component: dashboard
+#  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: polaris
+  name: polaris-external-service # external-service
+  annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path:   /metrics
+        prometheus.io/port:   '9100'
+        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "environment=dev,owner=SRE,job=prometheus,component=polarisUI"
+        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+        service.beta.kubernetes.io/aws-load-balancer-type: nlb # Es el unico que soporta hasta el momento (si no pongo nada, usa el classic)
+        service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "55"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "7"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "19"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "6"
+        # Specifies the bandwidth value (value range: [1,2000] Mbps).
+        #service.kubernetes.io/qcloud-loadbalancer-internet-max-bandwidth-out: "1"
+        # When this annotation is set，the loadbalancers will only register nodes
+        # with pod running on it, otherwise all nodes will be registered.
+        service.kubernetes.io/local-svc-only-bind-node-with-pod: "true"
+        #kubernetes.io/ingress-bandwidth: "1M"
+  labels:
+    app: polaris
+    component: dashboard
+spec:
+  type: LoadBalancer
+  ports:
+  - name: polaris
+    port: 8080
+    protocol: TCP  
+  selector:
+    app: polaris
+    component: dashboard
+---
+# Source: polaris/templates/dashboard.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polaris-dashboard
+  namespace: polaris
+  labels:
+    app: polaris
+    component: dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: polaris
+      component: dashboard
+  template:
+    metadata:
+      labels:
+        app: polaris
+        component: dashboard
+    spec:
+      containers:
+      - command:
+        - polaris
+        - dashboard
+        image: 'quay.io/fairwinds/polaris:1.2'
+        imagePullPolicy: 'Always'
+        name: dashboard
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 20
+        resources:
+          limits:
+            cpu: 150m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+      serviceAccountName: polaris
+      nodeSelector:
+      tolerations:
+

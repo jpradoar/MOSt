@@ -1,0 +1,261 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-aws-cert-manager
+  namespace: monitoring
+data:
+  grafana-dashboard-aws-cert-manager.json: |-
+      {
+        "__inputs": [],
+        "__requires": [
+          {
+            "type": "datasource",
+            "id": "cloudwatch",
+            "name": "CloudWatch",
+            "version": "1.0.0"
+          },
+          {
+            "type": "grafana",
+            "id": "grafana",
+            "name": "Grafana",
+            "version": "7.5.2"
+          },
+          {
+            "type": "panel",
+            "id": "graph",
+            "name": "Graph",
+            "version": ""
+          },
+          {
+            "type": "panel",
+            "id": "text",
+            "name": "Text",
+            "version": ""
+          }
+        ],
+      {
+        "annotations": {
+          "list": [
+            {
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+              },
+              "type": "dashboard"
+            }
+          ]
+        },
+        "description": "Visualize AWS Certificate Manager metrics",
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "graphTooltip": 0,
+        "id": 15,
+        "iteration": 1644841322667,
+        "links": [],
+        "liveNow": false,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": {
+              "uid": "$datasource"
+            },
+            "description": "",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 24,
+              "x": 0,
+              "y": 0
+            },
+            "hiddenSeries": false,
+            "id": 3,
+            "legend": {
+              "alignAsTable": true,
+              "avg": false,
+              "current": true,
+              "max": false,
+              "min": false,
+              "show": true,
+              "sort": "current",
+              "sortDesc": false,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "connected",
+            "options": {
+              "alertThreshold": false
+            },
+            "percentage": false,
+            "pluginVersion": "8.3.4",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "{{CertificateArn}}",
+                "dimensions": {
+                  "CertificateArn": "$CertificateArn"
+                },
+                "expression": "",
+                "id": "",
+                "matchExact": true,
+                "metricEditorMode": 0,
+                "metricName": "DaysToExpiry",
+                "metricQueryType": 0,
+                "namespace": "AWS/CertificateManager",
+                "period": "",
+                "refId": "A",
+                "region": "$region",
+                "statistic": "Average"
+              }
+            ],
+            "thresholds": [],
+            "timeRegions": [],
+            "title": "DaysToExpiry",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "mode": "time",
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "$$hashKey": "object:180",
+                "format": "none",
+                "logBase": 1,
+                "min": "0",
+                "show": true
+              },
+              {
+                "$$hashKey": "object:181",
+                "format": "short",
+                "logBase": 1,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false
+            }
+          }
+        ],
+        "refresh": false,
+        "schemaVersion": 34,
+        "style": "dark",
+        "tags": [
+          "monitoringartist",
+          "cloudwatch",
+          "aws",
+          "cert",
+          " Certificate Manager",
+          "certificate"
+        ],
+        "templating": {
+          "list": [
+            {
+              "current": {
+                "selected": false,
+                "text": "DEV-009443737847",
+                "value": "DEV-009443737847"
+              },
+              "hide": 0,
+              "includeAll": false,
+              "label": "Datasource",
+              "multi": false,
+              "name": "datasource",
+              "options": [],
+              "query": "cloudwatch",
+              "queryValue": "hea",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "type": "datasource"
+            },
+            {
+              "current": {
+                "selected": false,
+                "text": "default",
+                "value": "default"
+              },
+              "datasource": {
+                "uid": "$datasource"
+              },
+              "definition": "regions()",
+              "hide": 0,
+              "includeAll": false,
+              "label": "Region",
+              "multi": false,
+              "name": "region",
+              "options": [],
+              "query": "regions()",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "sort": 0,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            },
+            {
+              "allValue": "*",
+              "current": {
+                "selected": false,
+                "text": "All",
+                "value": "$__all"
+              },
+              "datasource": {
+                "uid": "$datasource"
+              },
+              "definition": "dimension_values($region,AWS/CertificateManager,DaysToExpiry,CertificateArn)",
+              "hide": 0,
+              "includeAll": true,
+              "label": "CertificateArn",
+              "multi": false,
+              "name": "CertificateArn",
+              "options": [],
+              "query": "dimension_values($region,AWS/CertificateManager,DaysToExpiry,CertificateArn)",
+              "refresh": 1,
+              "regex": "",
+              "skipUrlSync": false,
+              "sort": 1,
+              "tagValuesQuery": "",
+              "tagsQuery": "",
+              "type": "query",
+              "useTags": false
+            }
+          ]
+        },
+        "time": {
+          "from": "now-30d",
+          "to": "now"
+        },
+        "timepicker": {},
+        "timezone": "browser",
+        "title": "AWS Certificate Manager",
+        "uid": "AWSCertMg",
+        "version": 1,
+        "weekStart": ""
+      }

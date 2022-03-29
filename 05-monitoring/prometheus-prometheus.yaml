@@ -1,0 +1,93 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: encrypted-gp2
+  namespace: monitoring
+provisioner: kubernetes.io/aws-ebs # Only for AWS  EBS
+allowVolumeExpansion: true
+parameters:
+  type: gp2
+  fsType: ext4
+  encrypted: "true"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: prometheus-pvc
+  namespace: monitoring
+  labels:
+      prometheus: k8s
+  annotations:
+      prometheus.io/scrape: "true"
+spec:
+  storageClassName: encrypted-gp2
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 400Gi
+
+---      
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    app.kubernetes.io/component: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 2.28.0
+    prometheus: k8s
+  name: k8s
+  namespace: monitoring
+spec:
+  alerting:
+    alertmanagers:
+    - apiVersion: v2
+      name: alertmanager-main
+      namespace: monitoring
+      port: web
+  enableFeatures: []
+  #externalLabels: {}
+  externalLabels: 
+    cluster: ${cluster_name} # MUY IMPORTANTE PARA CUANDO SE USA FEDERATION
+  image: quay.io/prometheus/prometheus:v2.28.0
+  nodeSelector:
+    kubernetes.io/os: linux
+  podMetadata:
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: kube-prometheus
+      app.kubernetes.io/version: 2.28.0
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  probeNamespaceSelector: {}
+  probeSelector: {}
+  replicas: 1    # IMPORTANT: in aws EBS dont support more than 1 pod attached to PV () 
+  retention: 2y  # IMPORTANT:  retention on prometheus DB  2 years
+  resources:
+    requests:
+      memory: 400Mi
+  ruleNamespaceSelector: {}
+  ruleSelector:
+    matchLabels:
+      prometheus: k8s
+      role: alert-rules
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+  version: 2.28.0
+  volumes:
+  - name: prometheus-k8s-data
+    persistentVolumeClaim:
+      claimName: prometheus-pvc
+  containers:
+  - name: prometheus   
+    volumeMounts:
+    - mountPath: /prometheus
+      name: prometheus-k8s-data  

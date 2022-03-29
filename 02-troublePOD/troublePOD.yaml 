@@ -1,0 +1,41 @@
+#
+# POD for troubleshoot
+#
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: trouble-pod
+  labels:
+    app: trouble-pod
+    owner: sre-team
+spec:
+  replicas: 1
+  strategy: 
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: trouble-pod
+  template:
+    metadata:
+      labels:
+        app: trouble-pod
+    spec:
+      containers:
+      - name: trouble-pod
+        image: alpine:3.14.0
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh","-c"]
+        args: ["apk update; apk add vim curl wget nmap tcpdump net-tools iputils tcptraceroute kafkacat bash && sleep 3650d"]
+        resources:
+          limits:
+            cpu: 300m
+            memory: 300Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+      nodeSelector:
+      tolerations: 
