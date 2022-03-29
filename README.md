@@ -1,7 +1,7 @@
 <div align="center"><h1><b>MOSt</h1> Monitoring Observability Stack </b> 
 <br><br>
 
-<img src="img/k8s-icon.png" width="25" height="25"> <img src="img/prometheus-icon.png" width="25" height="25"> <img src="img/loki-icon.png"        width="25" height="25"> <img src="img/cloudwatch-icon.png" width="25" height="25"> <img src="img/grafana-icon.jpeg" width="25" height="25">
+<img src="img/k8s-icon.png" width="50" height="50"> <img src="img/prometheus-icon.png" width="50" height="50"> <img src="img/loki-icon.png"        width="50" height="50"> <img src="img/cloudwatch-icon.png" width="50" height="50"> <img src="img/grafana-icon.jpeg" width="50" height="50">
 </div>
 
 <br><br>
