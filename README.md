@@ -231,6 +231,11 @@ A Powerful Chaos Engineering Platform for Kubernetes
  - admin : SuperPowerPassword  (change it in grafana-deployment.yaml #L35 )
 
 
+### Prometheus custom config
+ - prometheus-prometheus.yaml
+ - prometheus-additional.yaml
+
+
 <br><br>
   
 <div align="center"><h1><b> Roadmap </b></h1></div>
