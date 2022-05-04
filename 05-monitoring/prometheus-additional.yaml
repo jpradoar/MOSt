@@ -1,0 +1,17 @@
+#
+# kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --dry-run=client -n monitoring -oyaml > additional-scrape-configs.yaml
+# kubectl apply -f additional-scrape-configs.yaml -n monitoring 
+# kubectl -n monitoring port-forward svc/prometheus-k8s 9090:9090
+# curl -v -X POST http://127.0.0.1:9090/-/reload
+#
+
+- job_name: "demo-config"
+  scrape_interval:     300s
+  static_configs:
+  - targets:
+          - your-endpoint:8089
+    labels:
+       name: demo-test
+       environment: test
+
+# You can add here your federation config

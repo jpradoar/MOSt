@@ -34,9 +34,10 @@ kind: Prometheus
 metadata:
   labels:
     app.kubernetes.io/component: prometheus
+    app.kubernetes.io/instance: k8s
     app.kubernetes.io/name: prometheus
     app.kubernetes.io/part-of: kube-prometheus
-    app.kubernetes.io/version: 2.28.0
+    app.kubernetes.io/version: 2.35.0
     prometheus: k8s
   name: k8s
   namespace: monitoring
@@ -51,20 +52,21 @@ spec:
   #externalLabels: {}
   externalLabels: 
     cluster: ${cluster_name} # MUY IMPORTANTE PARA CUANDO SE USA FEDERATION
-  image: quay.io/prometheus/prometheus:v2.28.0
+  image: quay.io/prometheus/prometheus:v2.35.0
   nodeSelector:
     kubernetes.io/os: linux
   podMetadata:
     labels:
       app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
       app.kubernetes.io/name: prometheus
       app.kubernetes.io/part-of: kube-prometheus
-      app.kubernetes.io/version: 2.28.0
+      app.kubernetes.io/version: 2.35.0
   podMonitorNamespaceSelector: {}
   podMonitorSelector: {}
   probeNamespaceSelector: {}
   probeSelector: {}
-  replicas: 1    # IMPORTANT: in aws EBS dont support more than 1 pod attached to PV () 
+  replicas: 1    # IMPORTANT:  in aws EBS dont support more than 1 pod attached to PV () 
   retention: 2y  # IMPORTANT:  retention on prometheus DB  2 years
   resources:
     requests:
@@ -79,15 +81,20 @@ spec:
     runAsNonRoot: true
     runAsUser: 1000
   serviceAccountName: prometheus-k8s
-  serviceMonitorNamespaceSelector: {}
+  additionalScrapeConfigs:             #----------------
+    name: additional-scrape-configs    #  Problem: https://github.com/prometheus-operator/kube-prometheus/discussions/1713
+    key: prometheus-additional.yaml    #  Fix:  https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/additional-scrape-config.md
+  serviceMonitorNamespaceSelector: {}  #----------------
   serviceMonitorSelector: {}
-  version: 2.28.0
+  version: 2.35.0
   volumes:
   - name: prometheus-k8s-data
     persistentVolumeClaim:
-      claimName: prometheus-pvc
+      claimName: prometheus-pvc   
   containers:
   - name: prometheus   
     volumeMounts:
     - mountPath: /prometheus
       name: prometheus-k8s-data  
+
+
