@@ -95,6 +95,4 @@ spec:
   - name: prometheus   
     volumeMounts:
     - mountPath: /prometheus
-      name: prometheus-k8s-data  
-
-
+      name: prometheus-k8s-data
