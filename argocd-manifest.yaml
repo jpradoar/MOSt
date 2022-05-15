@@ -1,0 +1,10 @@
+project: default
+source:
+  repoURL: 'https://github.com/jpradoar/MOSt.git'
+  path: .
+  targetRevision: main
+  directory:
+    recurse: true
+    jsonnet: {}
+destination:
+  server: 'https://kubernetes.default.svc'
