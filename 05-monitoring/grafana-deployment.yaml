@@ -173,7 +173,8 @@ spec:
           readOnly: false
 #--------------------------------------------------------------          
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        #beta.kubernetes.io/os: linux # [beta.kubernetes.io/os]: deprecated since v1.14; use "kubernetes.io/os" instead
+        kubernetes.io/os: linux
       securityContext:
         fsGroup: 65534
         runAsNonRoot: true
